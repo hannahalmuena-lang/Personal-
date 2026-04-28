@@ -1,0 +1,112 @@
+FILE_NAME = "diary.txt"
+
+def initialize():
+    file = open(FILE_NAME, "w")
+    text = input("Enter first diary entry: ")
+    file.write(text + "\n")
+    file.close()
+    print("Diary initialized.\n")
+
+def append():
+    file = open(FILE_NAME, "a")
+    text = input("Enter new entry: ")
+    file.write(text + "\n")
+    file.close()
+    print("Entry added.\n")
+
+def read():
+    try:
+        file = open(FILE_NAME, "r")
+        lines = file.readlines()
+        print("\n--- Entries ---")
+        for line in lines:
+            print(line.strip())
+        print("Total entries:", len(lines))
+        file.close()
+    except:
+        print("No file found.\n")
+
+def update():
+    try:
+        file = open(FILE_NAME, "r")
+        lines = file.readlines()
+        file.close()
+
+        for i in range(len(lines)):
+            print(f"{i+1}. {lines[i].strip()}")
+
+        num = int(input("Choose entry number to update: "))
+        new = input("New text: ")
+        lines[num-1] = new + "\n"
+
+        file = open(FILE_NAME, "w")
+        file.writelines(lines)
+        file.close()
+        print("Updated.\n")
+    except:
+        print("Error.\n")
+
+def search():
+    try:
+        word = input("Search word: ")
+        file = open(FILE_NAME, "r")
+        found = False
+
+        for line in file:
+            if word.lower() in line.lower():
+                print("Found:", line.strip())
+                found = True
+
+        if not found:
+            print("Not found.")
+        file.close()
+    except:
+        print("No file.\n")
+
+def delete():
+    try:
+        file = open(FILE_NAME, "r")
+        lines = file.readlines()
+        file.close()
+
+        for i in range(len(lines)):
+            print(f"{i+1}. {lines[i].strip()}")
+
+        num = int(input("Delete entry number: "))
+        lines.pop(num-1)
+
+        file = open(FILE_NAME, "w")
+        file.writelines(lines)
+        file.close()
+        print("Deleted.\n")
+    except:
+        print("Error.\n")
+
+while True:
+    print("\nPERSONAL DIARY SYSTEM")
+    print("1 - Initialize (A)")
+    print("2 - Append (B)")
+    print("3 - Read (C)")
+    print("4 - Update (D)")
+    print("5 - Search")
+    print("6 - Delete")
+    print("7 - Exit")
+
+    choice = input("Enter choice: ")
+
+    if choice == "1":
+        initialize()
+    elif choice == "2":
+        append()
+    elif choice == "3":
+        read()
+    elif choice == "4":
+        update()
+    elif choice == "5":
+        search()
+    elif choice == "6":
+        delete()
+    elif choice == "7":
+        break
+    else:
+        print("Invalid choice.")
